@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>MWOJ Organizer</title>
+<style>
+:root{--pine:#16402b;--red:#9b1b30;--cream:#fbf5e6;--gold:#c9a24b;--ink:#25302a;--card:#fffdf7}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.5 system-ui,-apple-system,sans-serif}
+header{background:var(--pine);color:var(--cream);padding:calc(env(safe-area-inset-top) + 16px) 16px 14px;border-bottom:4px solid var(--gold)}
+header h1{margin:0;font:700 26px Georgia,serif}
+main{max-width:680px;margin:0 auto;padding:16px}
+h2{font:700 24px Georgia,serif;color:var(--pine);margin:26px 0 8px}
+.card{background:var(--card);border:1px solid #d9cba6;border-left:5px solid var(--pine);border-radius:12px;padding:12px 14px;margin:10px 0}
+.card.open{border-left-color:var(--red)}
+.bar{height:12px;background:#e9dfc6;border-radius:9px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold))}
+button,.btn{font:600 17px system-ui;min-height:48px;border:0;border-radius:10px;background:var(--red);color:#fff;padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+button.alt,.btn.alt{background:var(--pine)}button.ghost{background:transparent;color:var(--pine);border:2px solid var(--pine)}
+.sm{min-height:40px;padding:6px 12px;font-size:15px;margin:6px 6px 0 0}
+label{display:block;font-weight:600;margin:10px 0 4px;font-size:15px}
+input,select{width:100%;font:17px system-ui;padding:11px;border:1px solid #b9ae93;border-radius:10px;background:#fff}
+.err{color:var(--red);font-weight:600;min-height:1.3em}.muted{color:#5b6a60;font-size:15px}
+.hide{display:none}
+</style></head><body>
+<header><h1>MWOJ Organizer</h1><div>Christmas at the Tree Lot</div></header>
+<main id="app"></main>
+<script>
+const U='https://sscxdsmoppzhslgyuolw.supabase.co',K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzY3hkc21vcHB6aHNsZ3l1b2x3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2MDM3MzYsImV4cCI6MjEwNzE3OTczNn0.x3pya9zMsaBnJiJ9ybgRF3hb6rvbmWT_6qugYE6eNh4';
+let tok=sessionStorage.getItem('t'),slots=[],rows=[],editing=null;
+const $=id=>document.getElementById(id),app=$('app');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=d=>new Date(d+'T12:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+const sl=s=>s.kind==='host'?`${fmt(s.day)} · ${s.label}`:s.label;
+const api=(p,o={})=>fetch(U+p,{...o,headers:{apikey:K,Authorization:'Bearer '+(tok||K),'Content-Type':'application/json',...(o.headers||{})}}).then(async r=>{const t=await r.text();let j=null;try{j=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error((j&&(j.message||j.msg||j.error_description))||'Error '+r.status);return j});
+
+function login(msg=''){app.innerHTML=`<h2>Organizer sign in</h2><p class="muted">Private page for the MWOJ coordinator.</p>
+<label for="e">Email</label><input id="e" type="email" autocomplete="username"><label for="p">Password</label><input id="p" type="password" autocomplete="current-password">
+<p class="err" id="er">${esc(msg)}</p><button id="go" style="width:100%">Sign in</button>`;
+$('go').onclick=async()=>{try{const j=await api('/auth/v1/token?grant_type=password',{method:'POST',body:JSON.stringify({email:$('e').value.trim(),password:$('p').value})});tok=j.access_token;sessionStorage.setItem('t',tok);load()}catch(x){$('er').textContent=x.message}}}
+async function load(){try{slots=await api('/rest/v1/slots?select=*&order=sort');rows=await api('/rest/v1/signups?select=*&order=created');draw()}catch(x){tok=null;sessionStorage.removeItem('t');login('Please sign in again.')}}
+const cnt=id=>rows.filter(r=>r.slot_id===id).length;
+function draw(){const tot=slots.reduce((a,s)=>a+s.capacity,0),fl=rows.length,by=Object.fromEntries(slots.map(s=>[s.id,s]));
+ const open=slots.filter(s=>cnt(s.id)<s.capacity);
+ app.innerHTML=`<h2>Progress</h2><div class="card"><b>${fl} of ${tot} positions filled</b><div class="bar"><i style="width:${100*fl/tot}%"></i></div></div>
+ <h2>Still needs volunteers (${open.length})</h2>${open.map(s=>`<div class="card open"><b>${esc(sl(s))}</b><br><span class="muted">${s.capacity-cnt(s.id)} of ${s.capacity} open</span></div>`).join('')||'<p>Every shift is covered! 🎄</p>'}
+ <h2>All registrations (${fl})</h2>${rows.map(r=>`<div class="card"><b>${esc(r.first)} ${esc(r.last)}</b><br>${esc(sl(by[r.slot_id]))}<br><a href="mailto:${esc(r.email)}">${esc(r.email)}</a>${r.phone?`<br><a href="tel:${esc(r.phone)}">${esc(r.phone)}</a>`:''}<br>
+ <button class="sm alt" data-e="${r.id}">Edit</button><button class="sm ghost" data-d="${r.id}">Remove</button></div>`).join('')||'<p class="muted">No registrations yet.</p>'}
+ <h2 id="ft">${editing?'Edit registration':'Add a volunteer'}</h2><div class="card"><label for="s">Spot</label><select id="s">${slots.map(s=>`<option value="${s.id}">${esc(sl(s))} (${cnt(s.id)}/${s.capacity})</option>`).join('')}</select>
+ <label for="f">First name</label><input id="f"><label for="l">Last name</label><input id="l"><label for="m">Email</label><input id="m" type="email"><label for="h">Phone (optional)</label><input id="h" type="tel">
+ <p class="err" id="er"></p><button id="sv" style="width:100%">${editing?'Save changes':'Add volunteer'}</button>${editing?'<button class="ghost" id="cn" style="width:100%;margin-top:8px">Cancel edit</button>':''}</div>
+ <h2>Tools</h2><button class="alt" id="csv" style="width:100%">Export volunteer list (CSV)</button><button class="ghost" id="out" style="width:100%;margin-top:10px">Sign out</button>`;
+ if(editing){const r=rows.find(x=>x.id===editing);$('s').value=r.slot_id;$('f').value=r.first;$('l').value=r.last;$('m').value=r.email;$('h').value=r.phone||''}
+ $('sv').onclick=save;$('csv').onclick=()=>csv(by);$('out').onclick=()=>{tok=null;sessionStorage.removeItem('t');login()};if($('cn'))$('cn').onclick=()=>{editing=null;draw()}}
+async function save(){const b={slot_id:$('s').value,first:$('f').value.trim(),last:$('l').value.trim(),email:$('m').value.trim(),phone:$('h').value.trim()||null};
+ if(!b.first||!b.last||!b.email)return $('er').textContent='Please enter first name, last name and email.';
+ const s=slots.find(x=>x.id===b.slot_id),n=rows.filter(r=>r.slot_id===b.slot_id&&r.id!==editing).length;
+ if(n>=s.capacity&&!confirm('That spot is already full. Add anyway?'))return;
+ try{if(editing)await api('/rest/v1/signups?id=eq.'+editing,{method:'PATCH',body:JSON.stringify(b),headers:{Prefer:'return=minimal'}});
+  else await api('/rest/v1/signups',{method:'POST',body:JSON.stringify(b),headers:{Prefer:'return=minimal'}});
+  editing=null;await load()}catch(x){$('er').textContent=x.message}}
+document.addEventListener('click',async e=>{const ed=e.target.closest('[data-e]'),de=e.target.closest('[data-d]');
+ if(ed){editing=ed.dataset.e;draw();$('ft').scrollIntoView()}
+ if(de){const r=rows.find(x=>x.id===de.dataset.d);if(confirm(`Remove ${r.first} ${r.last}? Her spot will reopen.`)){await api('/rest/v1/signups?id=eq.'+r.id,{method:'DELETE'});load()}}});
+function csv(by){const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const t=[['Opportunity','Date','First name','Last name','Email','Phone','Signed up']].concat(rows.map(r=>{const s=by[r.slot_id];return[s.label,s.day,r.first,r.last,r.email,r.phone,r.created]})).map(x=>x.map(q).join(',')).join('\r\n');
+ const u=URL.createObjectURL(new Blob([t],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download='mwoj-volunteers.csv';document.body.appendChild(a);a.click();a.remove()}
+tok?load():login();
+</script></body></html>
