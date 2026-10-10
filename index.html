@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Christmas at the Tree Lot · Mary’s Women of Joy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--pine:#16402b;--pine2:#0f2e1f;--red:#9b1b30;--cream:#fbf5e6;--gold:#c9a24b;--ink:#25302a;--card:#fffdf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:18px/1.55 "Source Sans 3",system-ui,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;line-height:1.1;margin:0}
+header{background:radial-gradient(circle at 20% 25%,#ffffff22 1.5px,transparent 2px) 0 0/46px 46px,radial-gradient(circle at 70% 60%,#ffffff1c 1.5px,transparent 2px) 0 0/62px 62px,linear-gradient(var(--pine),var(--pine2));color:var(--cream);text-align:center;padding:calc(env(safe-area-inset-top) + 40px) 22px 46px;border-bottom:4px solid var(--gold)}
+header .trees{font-size:30px;letter-spacing:6px}
+h1{font-size:clamp(40px,11vw,64px);font-weight:700;margin:10px 0 6px}
+header p{margin:6px auto;max-width:34ch;color:#f1e6c8}
+.where{font-size:15px;color:var(--gold)}
+main{max-width:640px;margin:0 auto;padding:22px 16px 40px}
+.progress{background:var(--card);border:2px solid var(--gold);border-radius:14px;padding:16px;text-align:center;margin-top:-34px;box-shadow:0 6px 18px #0002}
+.bar{height:12px;background:#e9dfc6;border-radius:9px;overflow:hidden;margin:10px 0 4px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0;transition:width .6s}
+h2{font-size:34px;color:var(--pine);margin:34px 0 8px}
+.lead{margin:0 0 12px}
+.wk{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:700;color:var(--red);margin:22px 0 8px}
+.slot{background:var(--card);border:1px solid #d9cba6;border-left:5px solid var(--pine);border-radius:12px;padding:14px 16px;margin:10px 0}
+.slot.full{border-left-color:var(--red);background:#f4ecd8}
+.slot h3{font-size:25px}.slot .t{color:#5b6a60;font-size:16px}
+.who{list-style:none;padding:0;margin:8px 0 10px}.who li{padding:2px 0}
+button,.btn{font:600 18px "Source Sans 3",sans-serif;min-height:52px;width:100%;border:0;border-radius:12px;background:var(--red);color:#fff;cursor:pointer;padding:12px 18px;text-align:center;text-decoration:none;display:block}
+button.alt,.btn.alt{background:var(--pine)}button.ghost{background:transparent;color:var(--pine);border:2px solid var(--pine)}
+button:disabled{background:#b9ae93;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.note{background:#f1e8cc;border-radius:12px;padding:12px 14px;margin:12px 0;font-size:16px}
+details{background:var(--card);border:1px solid #d9cba6;border-radius:12px;padding:10px 14px;margin:10px 0;font-size:16px}summary{cursor:pointer;font-weight:600}
+dialog{border:0;border-radius:16px;padding:20px;width:min(92vw,440px);background:var(--card)}
+dialog::backdrop{background:#0f2e1fcc}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:16px}
+input{width:100%;font:18px inherit;padding:12px;border:1px solid #b9ae93;border-radius:10px;background:#fff}
+.err{color:var(--red);font-weight:600;min-height:1.4em}
+.row{display:grid;gap:10px;margin-top:12px}
+footer{background:var(--pine2);color:var(--cream);text-align:center;padding:26px 18px calc(26px + env(safe-area-inset-bottom));border-top:4px solid var(--gold)}
+footer h3{font-size:26px}footer p{margin:4px 0 0;color:var(--gold);font-style:italic}
+.hide{display:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="trees" aria-hidden="true">🎄 ✨ 🎄</div>
+<h1>Christmas at the Tree Lot</h1>
+<p>Hosted by Mary’s Women of Joy</p>
+<p class="where">St. Ann Catholic Church Christmas Tree Lot<br>3635 Park Road, Charlotte, NC 28209</p></header>
+<main>
+<div class="progress" aria-live="polite"><strong id="pt">Loading the Christmas cheer…</strong><div class="bar"><i id="pb"></i></div><span id="ps"></span></div>
+
+<section id="manage" class="hide"><h2>Your sign-up</h2><div id="mine"></div></section>
+
+<section id="intro">
+<h2>Come share the joy</h2>
+<p class="lead">Help us bring a little Hallmark Christmas magic to our parish Christmas tree lot! Mary’s Women of Joy will be sharing warm beverages, friendly smiles, and Christmas cheer with families shopping for their trees. Whether you can serve refreshments or help purchase supplies, we’d love to have you join us.</p>
+<p class="lead">Our hospitality station is open <b>4:00–7:00 p.m.</b> (Eastern) Friday, Saturday and Sunday before and after Thanksgiving 2026.</p>
+</section>
+
+<h2>☕ Beverage hosts</h2>
+<details><summary>What does a beverage host do?</summary><p>Welcome families, serve coffee, hot tea, hot chocolate and warm apple cider, offer cream, flavored syrups and other extras, keep the station tidy and inviting, and share a little Christmas cheer.</p></details>
+<div id="hosts"></div>
+
+<h2>🛍️ Help us stock the Christmas cheer!</h2>
+<p class="lead">We need two women per weekend to buy the beverages and supplies. You don’t need to be at the tree lot in the evening.</p>
+<div class="note"><b>All supplies are fully reimbursed by the Men’s Club. No personal donation is expected.</b> Please save your receipts.</div>
+<div id="shop"></div>
+<details><summary>Shopping list</summary><p><b>Hot beverages:</b> regular and decaf coffee, hot chocolate, hot apple cider, assorted hot teas.<br><b>Accompaniments:</b> half-and-half or creamer, flavored coffee syrups, sugar and substitutes, honey, mini marshmallows, whipped cream, cinnamon sticks.<br><b>Serving supplies:</b> insulated hot cups, lids and sleeves, napkins, stir sticks, and anything else the coordinator identifies. Shoppers will receive a list with quantities.</p></details>
+</main>
+<footer><h3>Mary’s Women of Joy</h3><p>Sharing the joy of Christ this Christmas</p></footer>
+
+<dialog id="dlg"><form id="f" method="dialog"><h3 id="dt" style="font-size:30px"></h3>
+<label for="fn">First name</label><input id="fn" required autocomplete="given-name">
+<label for="ln">Last name</label><input id="ln" required autocomplete="family-name">
+<label for="em">Email address</label><input id="em" type="email" required autocomplete="email">
+<label for="ph">Mobile phone (optional)</label><input id="ph" type="tel" autocomplete="tel">
+<p class="err" id="er" role="alert"></p>
+<div class="row"><button id="go" type="submit">Sign me up!</button><button type="button" class="ghost" id="x">Not right now</button></div></form></dialog>
+
+<dialog id="ok"><div id="okb"></div></dialog>
+
+<script>
+const URL_='https://sscxdsmoppzhslgyuolw.supabase.co', KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzY3hkc21vcHB6aHNsZ3l1b2x3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2MDM3MzYsImV4cCI6MjEwNzE3OTczNn0.x3pya9zMsaBnJiJ9ybgRF3hb6rvbmWT_6qugYE6eNh4';
+const rpc=(fn,b={})=>fetch(`${URL_}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(b)})
+ .then(async r=>{const j=await r.json().catch(()=>null);if(!r.ok)throw new Error((j&&j.message)||'Something went wrong.');return j});
+const $=id=>document.getElementById(id), fmt=d=>new Date(d+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let board=[],cur=null;
+
+function card(s){const left=s.cap-s.names.length,full=left<=0,h=s.kind==='host';
+ return `<div class="slot ${full?'full':''}"><h3>${h?fmt(s.day):esc(s.label)}</h3>${h?`<div class="t">${esc(s.label)}</div>`:''}
+ <ul class="who">${s.names.map(n=>`<li>${h?'☕':'🛍️'} ${esc(n)}</li>`).join('')}${full?'':`<li>${h?'☕':'🛍️'} ${left} spot${left>1?'s':''} available</li>`}</ul>
+ ${full?'<button disabled>FULL</button>':`<button data-s="${s.id}">Sign me up!</button>`}</div>`}
+function render(){
+ const hosts=board.filter(s=>s.kind==='host'),shop=board.filter(s=>s.kind==='shopper');
+ let h='';hosts.forEach((s,i)=>{if(i===0)h+='<div class="wk">Weekend 1 · Before Thanksgiving</div>';if(i===6)h+='<div class="wk">Weekend 2 · After Thanksgiving</div>';h+=card(s)});
+ $('hosts').innerHTML=h;$('shop').innerHTML=shop.map(card).join('');
+ const tot=board.reduce((a,s)=>a+s.cap,0),fl=board.reduce((a,s)=>a+s.names.length,0);
+ $('pb').style.width=(100*fl/tot)+'%';
+ $('pt').textContent=fl>=tot?'Thanks to our wonderful Mary’s Women of Joy volunteers, every shift is covered! Merry Christmas!':'Christmas cheer is growing! 🎄';
+ $('ps').textContent=`${fl} of ${tot} volunteer positions filled!`}
+async function load(){try{board=await rpc('get_board');render()}catch(e){$('pt').textContent='We couldn’t load the sign-ups. Please refresh.'}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;cur=board.find(s=>s.id===b.dataset.s);
+ $('dt').textContent=cur.kind==='host'?`${fmt(cur.day)}, ${cur.label}`:cur.label;$('er').textContent='';$('dlg').showModal()});
+$('x').onclick=()=>$('dlg').close();
+$('f').onsubmit=async e=>{e.preventDefault();$('go').disabled=true;$('er').textContent='';
+ try{const t=await rpc('signup',{p_slot:cur.id,p_first:$('fn').value,p_last:$('ln').value,p_email:$('em').value,p_phone:$('ph').value});
+  $('dlg').close();$('f').reset();done(cur,t,true);load()}
+ catch(x){$('er').textContent=x.message;load()}finally{$('go').disabled=false}};
+
+// Calendar
+const z=(d,t)=>new Date(`${d}T${t}:00-05:00`).toISOString().replace(/[-:]|\.\d+/g,'');
+const nd=d=>{const x=new Date(d+'T12:00');x.setDate(x.getDate()+1);return x.toISOString().slice(0,10)};
+const LOC='St. Ann Catholic Church Christmas Tree Lot, 3635 Park Road, Charlotte, NC 28209';
+function ev(s,rd){if(s.kind==='host')return{title:'MWOJ Christmas Tree Lot Hospitality',a:z(s.day,s.start),b:z(s.day,s.end),loc:LOC,desc:'Serving warm beverages and welcoming families with Mary’s Women of Joy.',iso:[`${s.day}T${s.start}:00-05:00`,`${s.day}T${s.end}:00-05:00`]};
+ return{title:'MWOJ Tree Lot: buy beverages and supplies',a:rd.replace(/-/g,''),b:nd(rd).replace(/-/g,''),allday:1,loc:'',desc:`Shopping for the hospitality station (${s.label}). Fully reimbursed by the Men’s Club. Save receipts.`,iso:[rd,nd(rd)]}}
+function icsText(v){const u=crypto.randomUUID()+'@mwoj';const dt=v.allday?`DTSTART;VALUE=DATE:${v.a}\r\nDTEND;VALUE=DATE:${v.b}`:`DTSTART:${v.a}\r\nDTEND:${v.b}`;
+ return `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//MWOJ//Tree Lot//EN\r\nBEGIN:VEVENT\r\nUID:${u}\r\nDTSTAMP:${z(new Date().toISOString().slice(0,10),'00:00')}\r\n${dt}\r\nSUMMARY:${v.title}\r\nLOCATION:${v.loc.replace(/,/g,'\\,')}\r\nDESCRIPTION:${v.desc.replace(/,/g,'\\,')}\r\nEND:VEVENT\r\nEND:VCALENDAR`}
+function links(s,rd){const v=ev(s,rd),q=encodeURIComponent;
+ const g=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${q(v.title)}&dates=${v.a}/${v.b}&location=${q(v.loc)}&details=${q(v.desc)}`;
+ const o=`https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${q(v.title)}&startdt=${q(v.iso[0])}&enddt=${q(v.iso[1])}&location=${q(v.loc)}&body=${q(v.desc)}${v.allday?'&allday=true':''}`;
+ return{g,o,ics:'data:text/calendar;charset=utf-8,'+encodeURIComponent(icsText(v))}}
+function calBlock(s){const shop=s.kind==='shopper';
+ const d=shop?`<label for="rd">Remind me to shop on</label><input id="rd" type="date" value="${s.day<'2026-11-27'?'2026-11-16':'2026-11-23'}" onchange="upd()">`:'';
+ return `${d}<div class="row" id="cal"></div>`}
+window.upd=()=>{const s=window._s;const l=links(s,($('rd')||{}).value);
+ $('cal').innerHTML=`<a class="btn alt" href="${l.ics}" download="mwoj-tree-lot.ics">📅 Apple Calendar / .ics file</a><a class="btn alt" target="_blank" rel="noopener" href="${l.g}">Google Calendar</a><a class="btn alt" target="_blank" rel="noopener" href="${l.o}">Outlook</a>`};
+function done(s,tok,isNew){window._s=s;const link=location.origin+location.pathname+'?m='+tok;
+ const html=`<h3 style="font-size:30px">Thank you for sharing the joy of Christmas! 🎄</h3><p>Your generosity is helping Mary’s Women of Joy make the Christmas tree lot a little warmer and brighter.</p><p>We look forward to seeing you!</p>
+ <p><b>${s.kind==='host'?fmt(s.day)+', '+esc(s.label):esc(s.label)}</b></p>${calBlock(s)}
+ <p class="note">To change or cancel, use your private link:<br><a href="${link}" style="word-break:break-all">${link}</a><br>Save it. It’s the only way to cancel.</p>
+ <div class="row"><button class="ghost" onclick="$('ok').close()">Close</button></div>`;
+ if(isNew){$('okb').innerHTML=html;$('ok').showModal();upd()}return html}
+
+// Manage mode (?m=token)
+(async()=>{const t=new URLSearchParams(location.search).get('m');if(!t)return;
+ $('manage').classList.remove('hide');$('intro').classList.add('hide');
+ try{const s=await rpc('get_mine',{p_token:t});
+  if(!s){$('mine').innerHTML='<p>We couldn’t find this sign-up. It may already be canceled.</p>';return}
+  window._s=s;$('mine').innerHTML=`<p>Hi ${esc(s.first)}! You’re signed up for <b>${s.kind==='host'?fmt(s.day)+', '+esc(s.label):esc(s.label)}</b>.</p>${calBlock(s)}<div class="row"><button id="cx">Cancel my sign-up</button><a class="btn ghost" href="${location.pathname}">Choose a different spot</a></div><p class="note">To change, cancel here and pick a new spot below.</p>`;
+  upd();$('cx').onclick=async()=>{if(!confirm('Cancel this sign-up? Your spot will reopen for someone else.'))return;
+   await rpc('cancel_signup',{p_token:t});$('mine').innerHTML='<p>Your sign-up is canceled and the spot has reopened. Thank you!</p><a class="btn alt" href="'+location.pathname+'">See open spots</a>';load()}}
+ catch(e){$('mine').innerHTML='<p>'+esc(e.message)+'</p>'}})();
+load();setInterval(load,30000);
+</script></body></html>
