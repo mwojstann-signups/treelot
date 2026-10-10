@@ -80,6 +80,7 @@ footer h3{font-size:26px}footer p{margin:4px 0 0;color:var(--gold);font-style:it
 
 <script>
 const URL_='https://sscxdsmoppzhslgyuolw.supabase.co', KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzY3hkc21vcHB6aHNsZ3l1b2x3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE2MDM3MzYsImV4cCI6MjEwNzE3OTczNn0.x3pya9zMsaBnJiJ9ybgRF3hb6rvbmWT_6qugYE6eNh4';
+const MAIL='https://script.google.com/macros/s/AKfycbwKlIyeUIyzlW9wJenphMHu4ff5LB6TuaFFAqxY8acNshG3G9l-kxdXu90W4-GQabE/exec';
 const rpc=(fn,b={})=>fetch(`${URL_}/rest/v1/rpc/${fn}`,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify(b)})
  .then(async r=>{const j=await r.json().catch(()=>null);if(!r.ok)throw new Error((j&&j.message)||'Something went wrong.');return j});
 const $=id=>document.getElementById(id), fmt=d=>new Date(d+'T12:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
@@ -104,6 +105,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b
 $('x').onclick=()=>$('dlg').close();
 $('f').onsubmit=async e=>{e.preventDefault();$('go').disabled=true;$('er').textContent='';
  try{const t=await rpc('signup',{p_slot:cur.id,p_first:$('fn').value,p_last:$('ln').value,p_email:$('em').value,p_phone:$('ph').value});
+  if(MAIL)fetch(MAIL+'?t='+encodeURIComponent(t),{mode:'no-cors'}).catch(()=>{});
   $('dlg').close();$('f').reset();done(cur,t,true);load()}
  catch(x){$('er').textContent=x.message;load()}finally{$('go').disabled=false}};
 
